@@ -72,6 +72,8 @@ function getBusInfo(){
 
 	//hit cta API to get bus info
 	else{
+		_gaq.push(['_trackEvent', 'Bus Search', 'Search', busId]);
+
 		$.ajax({
 			url:'/businfo/'+busId,
 		}).done(function(response){
