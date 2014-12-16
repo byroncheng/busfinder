@@ -118,7 +118,7 @@ function getBusInfo(){
 			}
 			//otherwise error
 			else{
-				$('#debug').html('<br>ERROR <br>'+response['bustime-response'].error[0].msg);
+				$('#debug').html('<br>ERROR <br>'+response['bustime-response'].error[0].msg+'<br>That bus is not running or does not exist.');
 			}
 		});
 
