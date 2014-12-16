@@ -9,6 +9,11 @@ $(document).ready(function(){
 	// 	$('#debug').html('Geolocation is not supported by this browser.');
 	// }
 
+	// fires google analytics
+	_gaq.push(['_setAccount', 'UA-57697023-1']);
+	_gaq.push(['_trackPageview']);
+
+
 	//update user button click
 	$('#inputBusNumber').keyup(function(event){
 		if(event.keyCode == 13){
@@ -120,3 +125,13 @@ function getBusInfo(){
 
 	}
 }
+
+//Google Analytics Setup =======================================
+var _gaq = _gaq || [];
+
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
