@@ -86,7 +86,7 @@ function getBusInfo(){
 			//if the "vehicle" element is found
 			if(typeof response['bustime-response'].vehicle != 'undefined'){
 				$('#debug').html(
-					'Bus Number: '+response['bustime-response'].vehicle[0].vid+
+					'Bus Number: '+busId+
 					'</br>Route '+response['bustime-response'].vehicle[0].rt+
 					' to '+response['bustime-response'].vehicle[0].des);
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
@@ -95,11 +95,11 @@ function getBusInfo(){
 				var marker = new google.maps.Marker({
 					position: myLatlng,
 					map: map,
-					title:'Bus Number: '+response['bustime-response'].vehicle[0].vid
+					title:'Bus Number: '+busId
 				});
 
 				//sets info window for bus marker
-				var contentString = 'Bus Number: '+response['bustime-response'].vehicle[0].vid+
+				var contentString = 'Bus Number: '+busId+
 					'</br>Route '+response['bustime-response'].vehicle[0].rt+
 					' to '+response['bustime-response'].vehicle[0].des;
 				var infoWindow = new google.maps.InfoWindow({
@@ -118,7 +118,7 @@ function getBusInfo(){
 			}
 			//otherwise error
 			else{
-				$('#debug').html('<br>ERROR <br>'+response['bustime-response'].error[0].msg+'<br>That bus is not running or does not exist.');
+				$('#debug').html('<br>ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
 			}
 		});
 
