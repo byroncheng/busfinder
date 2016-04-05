@@ -37,6 +37,18 @@ function drawMap(){
 		mapOptions);
 }
 
+//add marker to map and push to array
+var markers = [];
+
+function addMarker(location,label){
+	var marker = new google.maps.Marker({
+		position: location,
+		map: map,
+		title:'Bus Number: '+label
+	});
+	markers.push(marker);
+}
+
 	google.maps.event.addDomListener(window, 'load', drawMap);
 
 
@@ -77,6 +89,7 @@ function getBusInfo(){
 
 	//hit cta API to get bus info
 	else{
+		
 		_gaq.push(['_trackEvent', 'Bus Search', 'Search', busId]);
 
 		$.ajax({
@@ -92,12 +105,14 @@ function getBusInfo(){
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
 				
 				//sets and draws the bus marker
+				addMarker(myLatlng,busId);
+/*
 				var marker = new google.maps.Marker({
 					position: myLatlng,
 					map: map,
 					title:'Bus Number: '+busId
 				});
-
+*/
 				//sets info window for bus marker
 				var contentString = 'Bus Number: '+busId+
 					'</br>Route '+response['bustime-response'].vehicle[0].rt+
@@ -106,19 +121,19 @@ function getBusInfo(){
 					content: contentString
 				});
 
-				google.maps.event.addListener(marker, 'click', function() {
-					infoWindow.open(map,marker);
+				google.maps.event.addListener(markers[0], 'click', function() {
+					infoWindow.open(map,markers[0]);
 				});
 
 				//zooms in and moves to the location of the marker
 				map.panTo(myLatlng);
 				map.setZoom(15);
-				infoWindow.open(map,marker);
+				infoWindow.open(map,markers[0]);
 
 			}
 			//otherwise error
 			else{
-				$('#debug').html('<br>ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
+				$('#debug').html('<br>CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
 			}
 		});
 
