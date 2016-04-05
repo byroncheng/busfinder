@@ -132,10 +132,8 @@ function getBusInfo(){
 					' to '+response['bustime-response'].vehicle[0].des);
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
 				
-				//clears all bus markers
+				//clears then draws bus markers
 				clearMarkers();
-
-				//sets and draws bus markers
 				addMarker(myLatlng,busId);
 
 				//sets info window for bus marker
@@ -145,7 +143,6 @@ function getBusInfo(){
 				var infoWindow = new google.maps.InfoWindow({
 					content: contentString
 				});
-
 				google.maps.event.addListener(markers[0], 'click', function() {
 					infoWindow.open(map,markers[0]);
 				});
@@ -154,7 +151,6 @@ function getBusInfo(){
 				map.setZoom(15);
 				mapRecenter(myLatlng,100,-50);
 				//map.panTo(myLatlng);
-				
 				infoWindow.open(map,markers[0]);
 
 			}
