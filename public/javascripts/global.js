@@ -49,6 +49,34 @@ function addMarker(location,label){
 	markers.push(marker);
 }
 
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	}
+}
+
+//remove all markers from the map and clear array
+function clearMarkers(){
+	setMapOnAll(null);
+	markers = [];
+}
+
+//offset map
+function mapRecenter(latlng,offsetx,offsety) {
+    var point1 = map.getProjection().fromLatLngToPoint(
+        (latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
+    );
+    var point2 = new google.maps.Point(
+        ( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
+        ( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
+    );  
+    map.setCenter(map.getProjection().fromPointToLatLng(new google.maps.Point(
+        point1.x - point2.x,
+        point1.y + point2.y
+    )));
+}
+
 	google.maps.event.addDomListener(window, 'load', drawMap);
 
 
@@ -104,15 +132,12 @@ function getBusInfo(){
 					' to '+response['bustime-response'].vehicle[0].des);
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
 				
-				//sets and draws the bus marker
+				//clears all bus markers
+				clearMarkers();
+
+				//sets and draws bus markers
 				addMarker(myLatlng,busId);
-/*
-				var marker = new google.maps.Marker({
-					position: myLatlng,
-					map: map,
-					title:'Bus Number: '+busId
-				});
-*/
+
 				//sets info window for bus marker
 				var contentString = 'Bus Number: '+busId+
 					'</br>Route '+response['bustime-response'].vehicle[0].rt+
@@ -126,8 +151,10 @@ function getBusInfo(){
 				});
 
 				//zooms in and moves to the location of the marker
-				map.panTo(myLatlng);
 				map.setZoom(15);
+				mapRecenter(myLatlng,100,-50);
+				//map.panTo(myLatlng);
+				
 				infoWindow.open(map,markers[0]);
 
 			}
