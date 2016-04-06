@@ -3,8 +3,8 @@ var router = express.Router();
 var http = require('http');
 var parseString = require('xml2js').parseString;
 
-//var ctaKey = process.env.CTAAPIKEY;
-var ctaKey = 'JqWmRgBCHkBvZucHDAHBNkA26';
+var ctaKey = process.env.CTAAPIKEY;
+//var ctaKey = 'JqWmRgBCHkBvZucHDAHBNkA26';
 
 /* GET bus listing. */
 router.get('/:id', function(req, res) {
