@@ -34,7 +34,10 @@ a {
 	#searchBox {
 		z-index: 2;
 		position: absolute;
-		margin: 100px;
+		left: 50%;
+		margin-right: -50%;
+		transform: translate(-50%, 0);
+		top: 25px;
 		background-color: #fff;
 		padding:20px;	
 	}

@@ -29,7 +29,9 @@ function drawMap(){
 	//initialize map
 	var mapOptions ={
 		center: new google.maps.LatLng(41.8760545,-87.6744772),
-		zoom: 12
+		zoom: 12,
+		mapTypeControl: false
+
 	};
 
 	//create the map opbject
@@ -147,9 +149,10 @@ function getBusInfo(){
 					infoWindow.open(map,markers[0]);
 				});
 
-				//zooms in and moves to the location of the marker
+				
 				map.setZoom(15);
-				mapRecenter(myLatlng,100,-50);
+				//zooms in and moves to the location of the marker
+				mapRecenter(myLatlng,0,-100);
 				//map.panTo(myLatlng);
 				infoWindow.open(map,markers[0]);
 
