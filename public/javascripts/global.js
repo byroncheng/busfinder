@@ -128,10 +128,11 @@ function getBusInfo(){
 
 			//if the "vehicle" element is found
 			if(typeof response['bustime-response'].vehicle != 'undefined'){
-				$('#debug').html(
-					'Bus Number: '+busId+
-					'</br>Route '+response['bustime-response'].vehicle[0].rt+
-					' to '+response['bustime-response'].vehicle[0].des);
+				// $('#debug').html(
+				// 	'Bus Number: '+busId+
+				// 	'</br>Route '+response['bustime-response'].vehicle[0].rt+
+				// 	' to '+response['bustime-response'].vehicle[0].des);
+				$('#debug').empty();
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
 				
 				//clears then draws bus markers
@@ -159,7 +160,7 @@ function getBusInfo(){
 			}
 			//otherwise error
 			else{
-				$('#debug').html('<br>CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
+				$('#debug').html('CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
 			}
 		});
 
