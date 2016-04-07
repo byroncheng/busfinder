@@ -20,7 +20,7 @@ $(document).ready(function(){
 			$('#btnSubmit').click();
 		}
 	});
-	$('#btnSubmit').on('click', getBusInfo);
+	$('#btnSubmit').on('click', putBusMarker);
 });
 
 //Google Maps Stuff ============================================
@@ -82,6 +82,71 @@ function mapRecenter(latlng,offsetx,offsety) {
 	google.maps.event.addDomListener(window, 'load', drawMap);
 
 
+//CTA Bus Stuff ===================================================
+function putBusMarker(){
+	//check if bus number field is blank
+	var busTimer;
+	var busId = $('#inputBusNumber').val();
+	
+	$('#debug').empty();
+
+	if (busId === ''){
+		alert('Please enter a bus number');
+	}
+
+	//hit cta API to get bus info
+	else{
+		_gaq.push(['_trackEvent', 'Bus Search', 'Search', busId]);
+		getBusInfo(busId);
+		//busTimer = setInterval(function(){ getBusInfo(busId); }, 5000);
+	}
+}
+
+// Hits CTA API and gets and draws the result on the map
+function getBusInfo(busId){
+	console.log(busId);
+	$.ajax({
+			url:'/businfo/'+busId,
+		}).done(function(response){
+
+			//if the "vehicle" element is found
+			if(typeof response['bustime-response'].vehicle != 'undefined'){
+				// $('#debug').html(
+				// 	'Bus Number: '+busId+
+				// 	'</br>Route '+response['bustime-response'].vehicle[0].rt+
+				// 	' to '+response['bustime-response'].vehicle[0].des);
+				//$('#debug').empty();
+				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
+				
+				//clears then draws bus markers
+				clearMarkers();
+				addMarker(myLatlng,busId);
+
+				//sets info window for bus marker
+				var contentString = 'Bus Number: '+busId+
+					'</br>Route '+response['bustime-response'].vehicle[0].rt+
+					' to '+response['bustime-response'].vehicle[0].des;
+				var infoWindow = new google.maps.InfoWindow({
+					content: contentString
+				});
+				google.maps.event.addListener(markers[0], 'click', function() {
+					infoWindow.open(map,markers[0]);
+				});
+
+				//zooms in and moves to the location of the marker
+				map.setZoom(15);
+				mapRecenter(myLatlng,0,-100);
+				//map.panTo(myLatlng);
+				infoWindow.open(map,markers[0]);
+
+			}
+			//otherwise error
+			else{
+				$('#debug').html('CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
+			}
+		});
+}
+
 //Geolocation ====================================================
 // Position getting function using HTML5 Geolocation
 function getGeolocation(position){
@@ -104,67 +169,6 @@ function showGeoError(error){
 		case error.UNKNOWN_ERROR:
 			$('#debug').html('An unknown error occurred.');
 			break;
-	}
-}
-
-
-//CTA Bus Stuff ===================================================
-function getBusInfo(){
-	//check if bus number field is blank
-	var busId = $('#inputBusNumber').val();
-
-	if (busId === ''){
-		alert('Please enter a bus number');
-	}
-
-	//hit cta API to get bus info
-	else{
-		
-		_gaq.push(['_trackEvent', 'Bus Search', 'Search', busId]);
-
-		$.ajax({
-			url:'/businfo/'+busId,
-		}).done(function(response){
-
-			//if the "vehicle" element is found
-			if(typeof response['bustime-response'].vehicle != 'undefined'){
-				// $('#debug').html(
-				// 	'Bus Number: '+busId+
-				// 	'</br>Route '+response['bustime-response'].vehicle[0].rt+
-				// 	' to '+response['bustime-response'].vehicle[0].des);
-				$('#debug').empty();
-				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
-				
-				//clears then draws bus markers
-				clearMarkers();
-				addMarker(myLatlng,busId);
-
-				//sets info window for bus marker
-				var contentString = 'Bus Number: '+busId+
-					'</br>Route '+response['bustime-response'].vehicle[0].rt+
-					' to '+response['bustime-response'].vehicle[0].des;
-				var infoWindow = new google.maps.InfoWindow({
-					content: contentString
-				});
-				google.maps.event.addListener(markers[0], 'click', function() {
-					infoWindow.open(map,markers[0]);
-				});
-
-				
-				map.setZoom(15);
-				//zooms in and moves to the location of the marker
-				mapRecenter(myLatlng,0,-100);
-				//map.panTo(myLatlng);
-				infoWindow.open(map,markers[0]);
-
-			}
-			//otherwise error
-			else{
-				$('#debug').html('CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
-			}
-		});
-
-
 	}
 }
 
