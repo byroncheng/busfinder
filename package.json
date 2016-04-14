@@ -1,6 +1,8 @@
 {
   "name": "busfinder",
-  "version": "0.0.0",
+  "version": "0.2.0",
+  "description": "Web app showing the position of a particular vehicle in the CTA Bus Network",
+  "author": "Byron Cheng <byroncheng@gmail.com>",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
