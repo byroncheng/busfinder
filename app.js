@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var env = require('dotenv').config();
 
 var routes = require('./routes/index');
 var businfo = require('./routes/businfo');

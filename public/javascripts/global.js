@@ -81,7 +81,7 @@ function mapRecenter(latlng,offsetx,offsety) {
 
 	google.maps.event.addDomListener(window, 'load', drawMap);
 
-
+var t;
 //CTA Bus Stuff ===================================================
 function putBusMarker(){
 	//check if bus number field is blank
@@ -97,6 +97,7 @@ function putBusMarker(){
 	//hit cta API to get bus info
 	else{
 		_gaq.push(['_trackEvent', 'Bus Search', 'Search', busId]);
+		clearTimeout(t);
 		getBusInfo(busId);
 		//busTimer = setInterval(function(){ getBusInfo(busId); }, 5000);
 	}
@@ -138,6 +139,10 @@ function getBusInfo(busId){
 				mapRecenter(myLatlng,0,-100);
 				//map.panTo(myLatlng);
 				infoWindow.open(map,markers[0]);
+				
+				t = setTimeout(function() {
+					getBusInfo(busId);
+				}, 60000);
 
 			}
 			//otherwise error

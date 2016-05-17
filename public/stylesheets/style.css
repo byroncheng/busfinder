@@ -34,9 +34,9 @@ a {
 /* Desktop specific search box*/
 @media only screen and (min-width: 796px) {
 	#searchBox {
-		left: 50%;
+		left: 25%;
 		margin-right: -50%;
-		transform: translate(-50%, 0);
+		/*transform: translate(-50%, 0);*/
 		top: 25px;
 		
 		padding:20px;
