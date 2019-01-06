@@ -142,7 +142,7 @@ function getBusInfo(busId){
 				
 				t = setTimeout(function() {
 					getBusInfo(busId);
-				}, 60000);
+				}, 15000);
 
 			}
 			//otherwise error
