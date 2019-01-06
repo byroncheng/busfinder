@@ -13,7 +13,12 @@ $(document).ready(function(){
 	_gaq.push(['_setAccount', 'UA-57697023-1']);
 	_gaq.push(['_trackPageview']);
 
+	// on tap/click select all
+	$('#inputBusNumber').focus(function () {
+		$(this).select();
+	  });
 
+	
 	//update user button click
 	$('#inputBusNumber').keyup(function(event){
 		if(event.keyCode == 13){
@@ -94,7 +99,7 @@ function putBusMarker(){
 	$('#debug').empty();
 
 	if (busId === ''){
-		alert('Please enter a bus number');
+		alert('Please enter a valid bus number');
 	}
 
 	//hit cta API to get bus info

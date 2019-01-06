@@ -39,14 +39,14 @@ a {
 /* Desktop specific search box*/
 @media all and (min-width: 796px) {
 	#searchBox {
-		left: 25%;
-		margin-right: -50%;
 		top: 25px;
-		
-		width: auto;
-		margin:10px;
 
+		left: 50%;
+		margin-left: -193px;
 		
+		width: 346px;
+
+		padding: 20px;
 	}
 }
 

@@ -6,14 +6,15 @@ block content
 		div#searchBox
 			// SELECT BUS
 			#selectBus
+			form(action='#')
 				input#inputBusNumber(type='number', autofocus=true, required=true, placeholder='Enter a bus number')
 				
 			p#startNote
 				|Find valid bus numbers at 
 				a(href="http://chicagobus.org/buses" target="_blank") ChicagoBus.org
 			p#note
-				|Busfinder updated 5/17/2016. 
-				a(href='http://twitter.com/byroncheng') @byroncheng
+				|BUSFINDER updated 1/5/2019. 
+				a(href='http://twitter.com/byroncheng' target="_blank") @byroncheng
 			// /SELECT BUS
 
 			div#debug
