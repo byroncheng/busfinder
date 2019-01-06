@@ -108,7 +108,7 @@ function putBusMarker(){
 
 // Hits CTA API and gets and draws the result on the map
 function getBusInfo(busId){
-	console.log(busId);
+	console.log('Searched for bus number: '+busId);
 	$.ajax({
 			url:'/businfo/'+busId,
 		}).done(function(response){
@@ -150,7 +150,8 @@ function getBusInfo(busId){
 			}
 			//otherwise error
 			else{
-				$('#debug').html('CTA API ERROR <br>'+response['bustime-response'].error[0].msg+'<br>Bus '+busId+' is not running or does not exist.');
+				$('#debug').html('Bus '+busId+' is not running or does not exist.');
+				console.log('CTA API ERROR: '+response['bustime-response'].error[0].msg);
 			}
 		});
 }
