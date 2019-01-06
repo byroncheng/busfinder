@@ -21,6 +21,7 @@ $(document).ready(function(){
 	
 	//update user button click
 	$('#inputBusNumber').keyup(function(event){
+		timer = 0;
 		if(event.keyCode == 13){
 			putBusMarker();
 			$('#inputBusNumber').blur();
@@ -111,6 +112,7 @@ function putBusMarker(){
 	}
 }
 
+var timer = 0;
 // Hits CTA API and gets and draws the result on the map
 function getBusInfo(busId){
 	console.log('Searched for bus number: '+busId);
@@ -126,7 +128,6 @@ function getBusInfo(busId){
 				// 	' to '+response['bustime-response'].vehicle[0].des);
 				//$('#debug').empty();
 				var myLatlng = new google.maps.LatLng(response['bustime-response'].vehicle[0].lat,response['bustime-response'].vehicle[0].lon);
-				
 				//clears then draws bus markers
 				clearMarkers();
 				addMarker(myLatlng,busId);
@@ -148,9 +149,17 @@ function getBusInfo(busId){
 				//map.panTo(myLatlng);
 				infoWindow.open(map,markers[0]);
 				
-				t = setTimeout(function() {
-					getBusInfo(busId);
-				}, 15000);
+				//Refreshes pin every 15s. Times out after 5 min
+				if(timer<=20){
+					t = setTimeout(function() {
+						timer++;
+						getBusInfo(busId);
+						console.log(timer);
+					}, 15000);
+				}
+				else{
+					alert('Busfinder has timed out. Please try another search');
+				}
 
 			}
 			//otherwise error
