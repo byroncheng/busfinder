@@ -164,6 +164,7 @@ function getBusInfo(busId){
 			}
 			//otherwise error
 			else{
+				clearMarkers();
 				$('#debug').html('Bus '+busId+' is not running or does not exist.');
 				console.log('CTA API ERROR: '+response['bustime-response'].error[0].msg);
 			}
