@@ -17,10 +17,13 @@ $(document).ready(function(){
 	//update user button click
 	$('#inputBusNumber').keyup(function(event){
 		if(event.keyCode == 13){
-			$('#btnSubmit').click();
+			putBusMarker();
+			$('#inputBusNumber').blur();
 		}
 	});
-	$('#btnSubmit').on('click', putBusMarker);
+
+	//Not needed when submit button removed
+	//$('#btnSubmit').on('click', putBusMarker);
 });
 
 //Google Maps Stuff ============================================

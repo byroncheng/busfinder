@@ -17,33 +17,40 @@ a {
 #wrapper {
 	height:100%;
 	width: 100%;
+	text-align: center;
 }
 
 /* Mobile first */
 #searchBox {
 		z-index: 2;
 		position: absolute;
-		width: 275px;
 
-		margin:10px;
-		padding-left:20px;
-		padding-right:20px;
+		width: 100%;
+		padding-top: 20px;
+		padding-bottom: 20px;
+
 		background-color: #fff;
+}
+
+#inputBusNumber, #btnSubmit{
+	font-size: 200%;
 }
 
 /* Desktop specific search box*/
-@media only screen and (min-width: 796px) {
+@media all and (min-width: 796px) {
 	#searchBox {
 		left: 25%;
 		margin-right: -50%;
-		/*transform: translate(-50%, 0);*/
 		top: 25px;
 		
-		padding:20px;
-		background-color: #fff;
+		width: auto;
+		margin:10px;
+
+		
 	}
 }
 
+/* Map background */
 #map-canvas {
 	z-index: 1;
 	width: 100%;

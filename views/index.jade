@@ -4,15 +4,12 @@ block content
 
 	div#wrapper
 		div#searchBox
-			h2= title
-
 			// SELECT BUS
-			p What bus ID are you tracking?
 			#selectBus
-				input#inputBusNumber(type='text', autofocus=true, required=true, placeholder='Bus Number')
-				button#btnSubmit Go
+				input#inputBusNumber(type='number', autofocus=true, required=true, placeholder='Enter a bus number')
+				
 			p#startNote
-				|Find valid bus IDs at 
+				|Find valid bus numbers at 
 				a(href="http://chicagobus.org/buses" target="_blank") ChicagoBus.org
 			p#note
 				|Busfinder updated 5/17/2016. 
